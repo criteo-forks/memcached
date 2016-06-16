@@ -51,7 +51,7 @@ start () {
           -l <%= @listen %> \
           -c <%= @maxconn %> \
           -I <%= @max_object_size %><% if @experimental_options.any? %> \
-          -o <%= @experimental_options.join(', ') %><% end %><% if @threads %> \
+          -o <%= @experimental_options.join(',') %><% end %><% if @threads %> \
           -t <%= @threads %><% end %>
         RETVAL=$?
         echo
