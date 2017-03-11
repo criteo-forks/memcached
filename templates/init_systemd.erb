@@ -17,6 +17,11 @@ ExecStart=/usr/bin/memcached -d \
   -I <%= @max_object_size %><% if @experimental_options.any? %> \
   -o <%= @experimental_options.join(', ') %><% end %><% if @threads %> \
   -t <%= @threads %><% end %>
+<% if @stopDelay %>
+ExecStop=/bin/echo "Stop is delayed for <%= @stopDelay %> seconds. This allows a monitoring tool based on `systemctl is-active` to unregister the service before it is effectively shutting down."
+ExecStop=/bin/sh -c "sleep <%= @stopDelay %>"
+TimeoutStopSec=<%= @stopDelay + 30 %>
+<% end %>
 
 [Install]
 WantedBy=multi-user.target
