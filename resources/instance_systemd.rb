@@ -26,6 +26,7 @@ property :ulimit, [Integer, String]
 property :template_cookbook, String, default: 'memcached'
 property :disable_default_instance, [TrueClass, FalseClass], default: true
 property :remove_default_config, [TrueClass, FalseClass], default: true
+property :stopDelay, Integer
 
 action :start do
   create_init
@@ -95,7 +96,8 @@ action_class.class_eval do
         threads: new_resource.threads,
         max_object_size: new_resource.max_object_size,
         experimental_options: new_resource.experimental_options,
-        ulimit: new_resource.ulimit
+        ulimit: new_resource.ulimit,
+        stopDelay: new_resource.stopDelay
       )
       cookbook 'memcached'
       notifies :restart, "service[#{memcached_instance_name}]", :immediately
