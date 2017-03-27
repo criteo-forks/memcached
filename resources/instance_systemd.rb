@@ -27,6 +27,7 @@ property :template_cookbook, String, default: 'memcached'
 property :disable_default_instance, [TrueClass, FalseClass], default: true
 property :remove_default_config, [TrueClass, FalseClass], default: true
 property :stopDelay, Integer
+property :do_not_restart, [TrueClass, FalseClass], default: false
 
 action :start do
   create_init
@@ -100,10 +101,17 @@ action_class.class_eval do
         stopDelay: new_resource.stopDelay
       )
       cookbook 'memcached'
-      notifies :restart, "service[#{memcached_instance_name}]", :immediately
+      notifies :run, 'execute[reload_unit_file]', :immediately
+      notifies :restart, "service[#{memcached_instance_name}]", :immediately unless new_resource.do_not_restart
       owner 'root'
       group 'root'
       mode '0644'
+    end
+
+    # systemd is cool like this
+    execute 'reload_unit_file' do
+      command 'systemctl daemon-reload'
+      action :nothing
     end
   end
 end
