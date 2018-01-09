@@ -10,6 +10,11 @@ LimitNOFILE=<%= @ulimit %>
 ExecStart=<%= @binary_path %> <%= @cli_options %>
 Restart=on-failure
 
+<% if @stop_delay %>ExecStop=/bin/echo "Stop is delayed for <%= @stop_delay %> seconds. This allows a monitoring tool based on `systemctl is-active` to unregister the service before it is effectively shutting down."
+ExecStop=/bin/sh -c "sleep <%= @stop_delay %>"
+TimeoutStopSec=<%= @stop_delay + 30 %>
+<% end %>
+
 # Various security configurations from:
 # https://github.com/memcached/memcached/blob/master/scripts/memcached.service
 PrivateTmp=true
