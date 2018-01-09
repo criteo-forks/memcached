@@ -42,6 +42,7 @@ property :disable_default_instance, [true, false], default: true
 property :remove_default_config, [true, false], default: true
 property :no_restart, [true, false], default: false
 property :log_level, String, default: 'info'
+property :stop_delay, Integer
 
 action :start do
   create_init
@@ -109,7 +110,8 @@ action_class do
         ulimit: new_resource.ulimit,
         user: new_resource.user,
         binary_path: binary_path,
-        cli_options: cli_options
+        cli_options: cli_options,
+        stop_delay: new_resource.stop_delay
       )
       cookbook new_resource.template_cookbook
       notifies :run, 'execute[reload_unit_file]', :immediately
