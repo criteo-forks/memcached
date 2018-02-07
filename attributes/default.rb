@@ -31,3 +31,4 @@ default['memcached']['experimental_options'] = []
 default['memcached']['extra_cli_options'] = []
 default['memcached']['ulimit'] = 1024
 default['memcached']['logfilepath'] = '/var/log/'
+default['memcached']['init_systemd_opts'] = []

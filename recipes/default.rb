@@ -33,5 +33,6 @@ memcached_instance 'memcached' do
   experimental_options node['memcached']['experimental_options']
   extra_cli_options node['memcached']['extra_cli_options']
   ulimit node['memcached']['ulimit']
+  init_systemd_opts node['memcached']['init_systemd_opts']
   action [:start, :enable]
 end

@@ -14,7 +14,9 @@ Restart=on-failure
 ExecStop=/bin/sh -c "sleep <%= @stop_delay %>"
 TimeoutStopSec=<%= @stop_delay + 30 %>
 <% end %>
-
+<% @init_systemd_opts.each do |option| -%>
+<%= option %>
+<% end -%>
 # Various security configurations from:
 # https://github.com/memcached/memcached/blob/master/scripts/memcached.service
 PrivateTmp=true

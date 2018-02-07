@@ -38,6 +38,7 @@ The following are node attributes are used to configure the command line options
 - `memcached['experimental_options']` - Comma separated list of extended or experimental options. (array)
 - `memcached['extra_cli_options']` - Array of single item options suchas -L for large pages.
 - `memcached['ulimit']` - maxfile limit to set (needs to be at least maxconn)
+- `memcached['init_systemd_opts']` - Enable options to systemd init, like: ['PrivateTmp=true', 'ProtectSystem=full']
 
 ## Usage
 
@@ -76,6 +77,7 @@ Adds or removes an instance of memcached running under the system's native init 
 - :disable_default_instance - disable the default 'memcached' service installed by the package. default: true
 - :no_restart - disable the service restart on configuration change. default: false
 - :log_level - The level at which we log, default to 'info'. Choose from: 'info', 'debug', 'trace' which map to '-v', '-vv' or '-vvv' arguments.
+- :init_systemd_opts - Enable options to systemd init, like: ['PrivateTmp=true', 'ProtectSystem=full']
 
 #### Examples
 
