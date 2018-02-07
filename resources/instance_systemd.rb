@@ -43,6 +43,7 @@ property :remove_default_config, [true, false], default: true
 property :no_restart, [true, false], default: false
 property :log_level, String, default: 'info'
 property :stop_delay, Integer
+property :init_systemd_opts, Array, default: []
 
 action :start do
   create_init
@@ -111,7 +112,8 @@ action_class do
         user: new_resource.user,
         binary_path: binary_path,
         cli_options: cli_options,
-        stop_delay: new_resource.stop_delay
+        stop_delay: new_resource.stop_delay,
+        init_systemd_opts: new_resource.init_systemd_opts
       )
       cookbook new_resource.template_cookbook
       notifies :run, 'execute[reload_unit_file]', :immediately
